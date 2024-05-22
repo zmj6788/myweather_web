@@ -19,7 +19,7 @@
                   <i class="fa fa-chevron-down"></i>
                 </a>
                 <template #overlay>
-                  <a-menu @click="myCity">
+                  <a-menu @click="myCity" style="background-color: #87c0ca;">
                     <a-menu-item key="zhengzhou">
                       <a href="javascript:;">郑州</a>
                     </a-menu-item>
@@ -42,14 +42,13 @@
           <img src="https://q.qlogo.cn/g?b=qq&nk=2124427385&s=100" alt="">
           <a-dropdown>
             <a class="ant-dropdown-link" @click.prevent>
-              用户名
+              所悟皆是空
               <i class="fa fa-chevron-down"></i>
             </a>
             <template #overlay>
-              <a-menu>
-
+              <a-menu style="background-color: #87c0ca;">
                 <a-menu-item>
-                  <a href="javascript:;">退出登录</a>
+                  <a @click="logout">退出登录</a>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -65,8 +64,7 @@
               <a-breadcrumb-item>
                 <div class="message_weather">
                   <div style="background: #87c0ca; padding: 30px">
-                    <a-card title="温度 晴" :bordered="false" 
-                      style="background: #87c0ca; width: 300px">
+                    <a-card title="温度 晴" :bordered="false" style="background: #87c0ca; width: 300px">
                       <p>风向 风级</p>
                       <p>天气指数：</p>
                       <p>湿度：</p>
@@ -109,6 +107,7 @@
 <script setup>
 import qing from '@/assets/images/qing.jpg';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 let cityName = "郑州"
 const cityweather = {
   cityName: "",
@@ -124,7 +123,7 @@ const cityweather = {
 const getWeather = () => {
 
   $.ajax({
-    url: "http://myweather.com/api/weather",
+    url: "http://localhost:8080/api/weather",
     type: "GET",
     data: { city: cityName }, // 这里直接传递对象，jQuery会自动处理为查询字符串
     success: function (res) {
@@ -161,6 +160,11 @@ const myCity = (key) => {
       break;
   }
 };
+
+const router = useRouter();
+const logout = () => {
+  router.push("/login")
+}
 
 //渲染天气数据
 
